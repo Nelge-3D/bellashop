@@ -5,7 +5,7 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
-
+import Image from 'next/image'
 import { Navigation, Pagination, Autoplay } from 'swiper/modules'
 
 const heroSlides = [
@@ -15,7 +15,6 @@ const heroSlides = [
 ]
 
 export default function HomePage() {
-  // Exemple produits (à remplacer par tes données réelles)
   const products = {
     Nettoyants: [
       { name: 'Clean It Zero', price: '17.90€', image: '/cleanser1.jpg' },
@@ -31,71 +30,122 @@ export default function HomePage() {
     ],
   }
 
-  // Nouveautés : 1er produit par catégorie
   const nouveautes = Object.entries(products).map(([category, items]) => ({
     category,
     product: items[0],
   }))
 
   return (
-    <div className="bg-neutral-950 text-white min-h-screen">
-      {/* Hero Carousel Swiper */}
-      <div className="max-w-full md:h-[24rem]">
+    <div className="relative min-h-screen bg-gradient-to-br from-[#2a0e0e] via-[#4a1414] to-[#0c0505] text-white overflow-hidden">
+      {/* Background blurred red shapes */}
+      <div className="pointer-events-none absolute -top-24 -left-24 w-96 h-96 bg-red-700 rounded-full opacity-30 filter blur-3xl animate-fadeInSlow"></div>
+      <div className="pointer-events-none absolute -bottom-28 -right-24 w-80 h-80 bg-red-800 rounded-full opacity-25 filter blur-2xl animate-fadeInSlow delay-200"></div>
+      <div className="pointer-events-none absolute top-40 right-1/2 w-72 h-72 bg-red-600 rounded-full opacity-20 filter blur-xl animate-fadeInSlow delay-400"></div>
+
+      {/* Hero Section */}
+      <section className="max-w-full md:h-[24rem] relative z-10 flex flex-col items-center justify-center">
         <Swiper
           modules={[Navigation, Pagination, Autoplay]}
           navigation
           pagination={{ clickable: true }}
-          autoplay={{ delay: 4000, disableOnInteraction: false }}
+          autoplay={{ delay: 4500, disableOnInteraction: false }}
           loop
-          className="h-64 md:h-96"
+          className="h-64 md:h-96 w-full max-w-6xl rounded-md shadow-lg overflow-hidden"
         >
           {heroSlides.map((slide, i) => (
             <SwiperSlide key={i}>
               <Link href={slide.href} aria-label={slide.alt}>
-                <img
-                  src={slide.image}
-                  alt={slide.alt}
-                  className="object-cover w-full h-64 md:h-96 rounded-sm"
-                />
+                <div className="relative w-full h-64 md:h-96 cursor-pointer">
+                  <Image
+                    src={slide.image}
+                    alt={slide.alt}
+                    fill
+                    className="object-cover transition-transform duration-700 hover:scale-105"
+                    sizes="100vw"
+                    priority
+                  />
+                  {/* Overlay stylized illustration */}
+                  <svg
+                    aria-hidden="true"
+                    className="absolute bottom-4 left-4 w-20 h-20 opacity-30"
+                    viewBox="0 0 64 64"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <circle cx="32" cy="32" r="30" stroke="#F87171" strokeWidth="4" />
+                    <path
+                      d="M20 44L32 20L44 44H20Z"
+                      fill="#F87171"
+                      fillOpacity="0.5"
+                    />
+                  </svg>
+                </div>
               </Link>
             </SwiperSlide>
           ))}
         </Swiper>
-      </div>
+      </section>
 
       {/* Nouveautés */}
-      <section className="max-w-6xl mx-auto px-4 py-12">
-        <h2 className="text-3xl font-bold mb-8 border-b border-red-600 inline-block">
+      <section className="max-w-6xl mx-auto px-4 py-12 relative z-10">
+        <h2 className="text-3xl font-extrabold mb-8 border-b-4 border-red-500 inline-block tracking-wide drop-shadow-lg">
           Nouveautés
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
           {nouveautes.map(({ category, product }) => (
-            <div key={category} className="bg-neutral-900 rounded-lg p-4 shadow-lg">
-              <h3 className="text-xl font-semibold mb-2">{category}</h3>
+            <div
+              key={category}
+              className="bg-neutral-900 rounded-xl p-6 shadow-xl hover:shadow-red-600 transition-shadow cursor-pointer"
+            >
+              <h3 className="text-xl font-semibold mb-3 tracking-wide">{category}</h3>
               <Link href={`/koreanskincare/${category.toLowerCase()}`}>
-                <img
+                <Image
                   src={product.image}
                   alt={product.name}
-                  className="rounded-md mb-2 w-full h-48 object-cover"
+                  width={400}
+                  height={300}
+                  className="rounded-lg mb-3 w-full h-48 object-cover transition-transform hover:scale-105"
                 />
               </Link>
-              <p className="text-gray-400">{product.name}</p>
-              <p className="text-red-500 font-semibold">{product.price}</p>
+              <p className="text-gray-300 mb-1">{product.name}</p>
+              <p className="text-red-500 font-bold text-lg">{product.price}</p>
             </div>
           ))}
         </div>
       </section>
 
       {/* Promotion */}
-      <section className="bg-red-600 text-white py-12 px-4 text-center">
-        <h2 className="text-4xl font-bold mb-4">Promotion spéciale</h2>
-        <p className="text-xl max-w-xl mx-auto">
-          Profitez de -20% sur toute la gamme Sérums jusqu'à la fin du mois !
+      <section className="bg-gradient-to-r from-red-800 via-red-700 to-red-600 text-white py-16 px-6 text-center relative z-10 rounded-t-lg shadow-2xl max-w-4xl mx-auto mb-12">
+        <h2 className="text-4xl font-extrabold mb-4 drop-shadow-lg">
+          Promotion spéciale
+        </h2>
+        <p className="text-xl max-w-xl mx-auto mb-8 leading-relaxed drop-shadow-md">
+          Profitez de -20% sur toute la gamme Sérums jusqu&apos;à la fin du mois !
         </p>
-        <Link href="/koreanskincare/serums" className="inline-block mt-6 px-6 py-3 bg-white text-red-600 font-bold rounded-full hover:bg-red-100 transition">
+        <Link
+          href="/koreanskincare/serums"
+          className="inline-block px-8 py-4 bg-white text-red-700 font-bold rounded-full shadow-lg hover:bg-red-50 transition transform hover:scale-105 active:scale-95"
+        >
           Découvrir les Sérums
         </Link>
       </section>
+
+      {/* Animations keyframes */}
+      <style jsx>{`
+        @keyframes fadeInSlow {
+          0% {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          100% {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        .animate-fadeInSlow {
+          animation: fadeInSlow 2.5s ease forwards;
+        }
+      `}</style>
     </div>
   )
 }

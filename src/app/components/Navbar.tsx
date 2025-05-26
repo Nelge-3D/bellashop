@@ -101,7 +101,7 @@ export const Navbar = () => {
         {/* Scrolling message */}
         <div className="bg-white text-black text-sm py-2 overflow-hidden whitespace-nowrap relative">
           <div className="animate-marquee px-4">
-            Livraison offerte dès 49€ d'achat 💖 | Nouveautés chaque semaine ✨ | Paiement en 3 fois disponible 🛒
+            Livraison offerte dès 49€ d&apos;achat 💖 | Nouveautés chaque semaine ✨ | Paiement en 3 fois disponible 🛒
           </div>
         </div>
 
