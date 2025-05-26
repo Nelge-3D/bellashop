@@ -15,9 +15,11 @@ export const Navbar = () => {
       <nav className="bg-neutral-900 text-white shadow z-50 relative">
         {/* Top bar */}
         <div className="container mx-auto px-4 py-2 flex justify-between items-center">
-          {/* Logo à gauche */}
+          {/* Logo à gauche avec lien vers la page d’accueil */}
           <div className="flex-1">
-            <div className="text-2xl font-bold text-white">FabeLa</div>
+            <Link href="/" className="text-2xl font-bold text-white hover:text-red-500">
+              BellaShop
+            </Link>
           </div>
 
           {/* Login & Panier à droite */}
@@ -52,9 +54,9 @@ export const Navbar = () => {
                 onMouseEnter={() => setOpenMenu(item.title)}
                 onMouseLeave={() => setOpenMenu(null)}
               >
-                <button className="flex items-center gap-1 font-semibold text-sm uppercase hover:text-red-500">
+                <Link href={item.path} className="flex items-center gap-1 font-semibold text-sm uppercase hover:text-red-500">
                   {item.title} <ChevronDown className="w-4 h-4" />
-                </button>
+                </Link>
                 {/* Dropdown */}
                 <div
                   className={clsx(
@@ -70,12 +72,12 @@ export const Navbar = () => {
                       <h4 className="text-sm font-bold text-white mb-2 underline decoration-red-500">{sub.title}</h4>
                       <ul className="space-y-1">
                         {sub.links.map((link) => (
-                          <li key={link}>
+                          <li key={link.label}>
                             <Link
-                              href="#"
+                              href={link.href}
                               className="text-sm text-gray-300 hover:text-red-500"
                             >
-                              {link}
+                              {link.label}
                             </Link>
                           </li>
                         ))}
@@ -96,44 +98,56 @@ export const Navbar = () => {
           </button>
         </div>
 
-        {/* Scrolling message - fond blanc, texte noir */}
+        {/* Scrolling message */}
         <div className="bg-white text-black text-sm py-2 overflow-hidden whitespace-nowrap relative">
           <div className="animate-marquee px-4">
             Livraison offerte dès 49€ d'achat 💖 | Nouveautés chaque semaine ✨ | Paiement en 3 fois disponible 🛒
           </div>
         </div>
 
-        {/* Mobile Menu */}
-        {isMobileMenuOpen && (
-          <div className="fixed inset-0 bg-neutral-900 z-50 flex flex-col p-6 space-y-6 overflow-y-auto">
-            <div className="flex justify-between items-center">
-              <div className="text-2xl font-bold">FabeLa</div>
-              <button onClick={() => setIsMobileMenuOpen(false)}>
-                <X className="w-6 h-6 text-white" />
-              </button>
-            </div>
+        {/* Mobile Menu (1/2 écran à gauche avec slide-in/out) */}
+      <div
+        className={clsx(
+          "fixed top-0 left-0 w-1/2 h-full bg-neutral-900 z-50 flex flex-col p-6 space-y-6 overflow-y-auto transition-transform duration-300 ease-in-out",
+          {
+            "translate-x-0": isMobileMenuOpen,
+            "-translate-x-full": !isMobileMenuOpen,
+          }
+        )}
+      >
+        <div className="flex justify-between items-center">
+          <Link href="/" className="text-2xl font-bold hover:text-red-500" onClick={() => setIsMobileMenuOpen(false)}>
+            FabeLa
+          </Link>
+          <button onClick={() => setIsMobileMenuOpen(false)}>
+            <X className="w-6 h-6 text-white" />
+          </button>
+        </div>
 
-            {navItems.map((item) => (
-              <div key={item.title}>
-                <p className="text-lg font-semibold uppercase text-red-500 mb-2">{item.title}</p>
-                {item.items.map((sub) => (
-                  <div key={sub.title} className="mb-4">
-                    <h4 className="text-white text-sm underline decoration-red-500">{sub.title}</h4>
-                    <ul className="pl-4 mt-1 space-y-1">
-                      {sub.links.map((link) => (
-                        <li key={link}>
-                          <Link href="#" className="text-gray-300 hover:text-red-500 text-sm">
-                            {link}
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                ))}
+        {navItems.map((item) => (
+          <div key={item.title}>
+            <Link href={item.path} className="text-lg font-semibold uppercase text-red-500 mb-2 block" onClick={() => setIsMobileMenuOpen(false)}>
+              {item.title}
+            </Link>
+            {item.items.map((sub) => (
+              <div key={sub.title} className="mb-4">
+                <h4 className="text-white text-sm underline decoration-red-500">{sub.title}</h4>
+                <ul className="pl-4 mt-1 space-y-1">
+                  {sub.links.map((link) => (
+                    <li key={link.label}>
+                      <Link href={link.href} className="text-gray-300 hover:text-red-500 text-sm" onClick={() => setIsMobileMenuOpen(false)}>
+                        {link.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
               </div>
             ))}
           </div>
-        )}
+        ))}
+      </div>
+
+        
       </nav>
 
       {/* Scrolling animation */}
