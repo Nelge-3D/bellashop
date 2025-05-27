@@ -9,7 +9,7 @@ import 'swiper/css/navigation'
 import 'swiper/css/pagination'
 
 const heroSlides = [
-  { image: '/hero1.jpg', href: '/koreanskincare/nettoyants', alt: 'Nettoyants' },
+  { image: '/hero1.png', href: '/koreanskincare/nettoyants', alt: 'Nettoyants' },
   { image: '/hero2.jpg', href: '/koreanskincare/toners', alt: 'Toners' },
   { image: '/hero3.jpg', href: '/koreanskincare/serums', alt: 'Sérums' },
 ]

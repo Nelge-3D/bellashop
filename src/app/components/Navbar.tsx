@@ -145,14 +145,14 @@ export const Navbar = () => {
 
         {/* Mobile Menu */}
         <div
-          className={clsx(
-            "fixed top-0 left-0 w-1/2 h-full bg-neutral-900 z-50 flex flex-col p-6 space-y-6 overflow-y-auto transition-transform duration-300 ease-in-out",
-            {
-              "translate-x-0": isMobileMenuOpen,
-              "-translate-x-full": !isMobileMenuOpen,
-            }
-          )}
-        >
+            className={clsx(
+              "fixed top-0 left-0 w-1/2 h-screen bg-neutral-900 z-50 flex flex-col p-6 space-y-6 overflow-y-auto transition-transform duration-300 ease-in-out",
+              {
+                "translate-x-0": isMobileMenuOpen,
+                "-translate-x-full": !isMobileMenuOpen,
+              }
+            )}
+          >
           <div className="flex justify-between items-center">
             <Link href="/" className="text-2xl font-bold hover:text-red-500" onClick={() => setIsMobileMenuOpen(false)}>
               BellaShop
