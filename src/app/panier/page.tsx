@@ -1,7 +1,7 @@
 'use client'
 
 import { useCartStore } from '@/lib/cartStore'
-import Link from 'next/link'
+
 
 export default function PanierPage() {
   const { items, removeFromCart, clearCart } = useCartStore()

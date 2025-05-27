@@ -154,7 +154,7 @@ export default function HomePage() {
           🎁 Promotion spéciale
         </h2>
         <p className="text-lg md:text-xl text-white/90 max-w-2xl mx-auto mb-10 leading-relaxed drop-shadow-md">
-          Profitez de <strong className="text-white font-bold">-20%</strong> sur toute la gamme <em>Sérums</em> jusqu'à la fin du mois. Une peau éclatante vous attend !
+          Profitez de <strong className="text-white font-bold">-20%</strong> sur toute la gamme <em>Sérums</em> jusqu&apos;à la fin du mois. Une peau éclatante vous attend !
         </p>
         <Link
           href="/koreanskincare/serums"
