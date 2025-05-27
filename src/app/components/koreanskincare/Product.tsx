@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import Image from 'next/image'
+import { useCartStore } from '@/lib/cartStore'
 
 type Product = {
   name: string
@@ -38,6 +39,7 @@ const products: Record<Category, Product[]> = {
 
 export default function KoreanSkincarePage() {
   const [activeCategory, setActiveCategory] = useState<Category>('Nettoyants')
+  const addToCart = useCartStore((state) => state.addToCart)
 
   return (
     <div className="relative min-h-screen bg-gradient-to-br from-[#2a0e0e] via-[#4a1414] to-[#0c0505] text-white px-4 py-8 overflow-hidden">
@@ -81,7 +83,10 @@ export default function KoreanSkincarePage() {
             </div>
             <h3 className="text-xl font-semibold mb-2 tracking-wide">{product.name}</h3>
             <p className="text-gray-400 mb-6">{product.price}</p>
-            <button className="bg-red-600 hover:bg-red-700 text-white font-semibold text-sm px-6 py-3 rounded-full shadow-md transition-transform active:scale-95">
+            <button
+              onClick={() => addToCart(product)}
+              className="bg-red-600 hover:bg-red-700 text-white font-semibold text-sm px-6 py-3 rounded-full shadow-md transition-transform active:scale-95"
+            >
               Ajouter au panier
             </button>
           </div>

@@ -5,10 +5,14 @@ import { navItems } from '@/app/data/NavItems'
 import { ChevronDown, Menu, Search, ShoppingCart, X } from 'lucide-react'
 import Link from 'next/link'
 import clsx from 'clsx'
+import { useCartStore } from '@/lib/cartStore'
 
 export const Navbar = () => {
   const [openMenu, setOpenMenu] = useState<string | null>(null)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const items = useCartStore((state) => state.items)
+  const itemCount = items.reduce((total, item) => total + (item.quantity ?? 1), 0)
+
 
   return (
     <>
@@ -27,8 +31,13 @@ export const Navbar = () => {
             <Link href="/login" className="text-sm font-semibold hover:text-red-500">
               Se connecter
             </Link>
-            <Link href="/panier">
+            <Link href="/panier" className="relative">
               <ShoppingCart className="w-5 h-5 hover:text-red-500" />
+              {itemCount > 0 && (
+                <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                  {itemCount}
+                </span>
+              )}
             </Link>
           </div>
         </div>
